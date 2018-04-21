@@ -98,5 +98,10 @@ Vagrant.configure("2") do |config|
       apt-get update
     SHELL
   end
+  
+  # install docker-ce
+  config.vm.provision "shell" do |s|
+    s.path = "./sh/install-docker.sh"
+  end
 
 end
