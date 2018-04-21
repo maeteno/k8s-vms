@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     end
 
     k8sMaster.vm.provision "shell", run:'always', inline: <<-SHELL
-      apt-get update
+      echo "start k8s-start"
     SHELL
   end
 
@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
     end
 
     k8sNode01.vm.provision "shell", run:'always', inline: <<-SHELL
-      apt-get update
+      echo "start k8s-node-01"
     SHELL
 
   end
@@ -95,10 +95,10 @@ Vagrant.configure("2") do |config|
     end
 
     k8sNode02.vm.provision "shell", run:'always', inline: <<-SHELL
-      apt-get update
+      echo "start k8s-node-02"
     SHELL
   end
-  
+
   # install docker-ce
   config.vm.provision "shell" do |s|
     s.path = "./sh/install-docker.sh"
