@@ -115,4 +115,9 @@ Vagrant.configure("2") do |config|
     sudo snap install kubeadm --classic
   SHELL
 
+  # install docker-ce
+  config.vm.provision "shell" do |s|
+    s.path = "./sh/pull-images.sh"
+  end
+
 end
