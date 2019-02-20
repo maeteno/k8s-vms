@@ -14,4 +14,4 @@ sudo apt-get update \
    stable" \
 && sudo apt-get -y update \
 && sudo apt-get -y install docker-ce \
-&& sudo gpasswd -a ${USER} docker
+&& sudo usermod -aG docker ${USER}

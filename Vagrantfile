@@ -50,12 +50,13 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 1
     vb.memory = "1024"
   end
 
   config.vm.define "k8s-master" do |k8sMaster|
     # vmGit.vm.network "forwarded_port", guest: 80, host: 8080
-    k8sMaster.vm.network "private_network", ip: "192.168.33.100"
+    k8sMaster.vm.network "private_network", ip: "192.168.33.200"
 
     # 虚拟机配置，这里配置的是virtualbox
     k8sMaster.vm.provider "virtualbox" do |vb|
@@ -67,30 +68,29 @@ Vagrant.configure("2") do |config|
 
     k8sMaster.vm.provision "shell", run:'always', inline: <<-SHELL
       echo "start k8s-start"
+      sudo snap install kubectl --classic
     SHELL
+
   end
 
   config.vm.define "k8s-node01" do |k8sNode01|
     # vmCI.vm.network "forwarded_port", guest: 80, host: 8081
-    k8sNode01.vm.network "private_network", ip: "192.168.33.101"
+    k8sNode01.vm.network "private_network", ip: "192.168.33.201"
 
     k8sNode01.vm.provider "virtualbox" do |vb|
-      vb.cpus = 1
       vb.name = 'k8s-node-01'
     end
 
     k8sNode01.vm.provision "shell", run:'always', inline: <<-SHELL
-      echo "start k8s-node-01"
+      echo "start k8s-node-01" 
     SHELL
-
   end
 
   config.vm.define "k8s-node02" do |k8sNode02|
     # vmCI.vm.network "forwarded_port", guest: 80, host: 8081
-    k8sNode02.vm.network "private_network", ip: "192.168.33.102"
+    k8sNode02.vm.network "private_network", ip: "192.168.33.202"
 
     k8sNode02.vm.provider "virtualbox" do |vb|
-      vb.cpus = 1
       vb.name = 'k8s-node-02'
     end
 
@@ -103,5 +103,16 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell" do |s|
     s.path = "./sh/install-docker.sh"
   end
+
+  # install docker-ce
+  config.vm.provision "shell" do |s|
+    s.path = "./sh/install-cri-tools.sh"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get install -y socat
+    sudo snap install kubelet --classic
+    sudo snap install kubeadm --classic
+  SHELL
 
 end
