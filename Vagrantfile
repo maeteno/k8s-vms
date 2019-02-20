@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "k8s-master" do |k8sMaster|
     # vmGit.vm.network "forwarded_port", guest: 80, host: 8080
-    k8sMaster.vm.network "private_network", ip: "192.168.33.200"
+    k8sMaster.vm.network "private_network", ip: "192.168.0.200"
 
     # 虚拟机配置，这里配置的是virtualbox
     k8sMaster.vm.provider "virtualbox" do |vb|
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "k8s-node01" do |k8sNode01|
     # vmCI.vm.network "forwarded_port", guest: 80, host: 8081
-    k8sNode01.vm.network "private_network", ip: "192.168.33.201"
+    k8sNode01.vm.network "private_network", ip: "192.168.0.201"
 
     k8sNode01.vm.provider "virtualbox" do |vb|
       vb.name = 'k8s-node-01'
@@ -88,7 +88,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "k8s-node02" do |k8sNode02|
     # vmCI.vm.network "forwarded_port", guest: 80, host: 8081
-    k8sNode02.vm.network "private_network", ip: "192.168.33.202"
+    k8sNode02.vm.network "private_network", ip: "192.168.0.202"
 
     k8sNode02.vm.provider "virtualbox" do |vb|
       vb.name = 'k8s-node-02'
